@@ -20,7 +20,7 @@ var days = [7]string{
 }
 
 func main() {
-	file, err := os.Open("input-2.txt")
+	file, err := os.Open("input.txt")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -55,29 +55,26 @@ func main() {
 		checkInDate, _ := strconv.Atoi(checkInInfo[2])
 
 		valid := false
-		if checkInYear >= startYear && checkInYear <= endYear {
-			if checkInMonth >= startMonth && checkInMonth <= endMonth {
-				if checkInDate >= startDate && checkInDate <= endDate {
 
-					if days[classDay] == getDayOfTheWeek(
-						checkInYear,
-						checkInMonth,
-						checkInDate,
-					) {
-						valid = true
-					}
-				}
+		isWithinYear := checkInYear >= startYear && checkInYear <= endYear
+		isWithinMonth := checkInMonth >= startMonth && checkInMonth <= endMonth
+		isWithinDate := checkInDate >= startDate && checkInDate <= endDate
+
+		if isWithinYear && isWithinMonth && isWithinDate {
+			if days[classDay] == getDayOfTheWeek(checkInYear, checkInMonth, checkInDate) {
+				valid = true
 			}
 		}
+
 		if valid {
 			fmt.Println("VALID")
 		} else {
 			fmt.Println("INVALID")
 		}
-	}
 
-	if err := scanner.Err(); err != nil {
-		log.Fatal(err)
+		if err := scanner.Err(); err != nil {
+			log.Fatal(err)
+		}
 	}
 }
 
